@@ -1,0 +1,77 @@
+name: SmartSleepAlarm
+options:
+  bundleIdPrefix: com.lzc
+  deploymentTarget:
+    iOS: "17.0"
+    watchOS: "10.0"
+  createIntermediateGroups: true
+
+packages:
+  SmartSleepCore:
+    path: .
+
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    DEVELOPMENT_TEAM: ""
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+  SmartSleepAlarm-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/iOS
+    info:
+      path: App/iOS/Info.plist
+      properties:
+        UILaunchScreen: {}
+        NSHealthShareUsageDescription: 用于读取心率并判断清醒状态，确保闹铃不漏叫。
+        NSHealthUpdateUsageDescription: 用于写入最少量睡眠相关标记，优化智能闹铃判断。
+        NSUserNotificationUsageDescription: 用于闹铃提醒与重响通知。
+        UIBackgroundModes:
+          - processing
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lzc.SmartSleepAlarm.ios
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_ENTITLEMENTS: App/iOS/SmartSleepAlarm_iOS.entitlements
+    dependencies:
+      - package: SmartSleepCore
+        product: SmartSleepiOS
+
+  SmartSleepAlarm-WatchApp:
+    type: com.apple.product-type.application.watchapp2
+    platform: watchOS
+    info:
+      path: App/WatchApp/Info.plist
+      properties:
+        WKWatchOnly: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lzc.SmartSleepAlarm.watchapp
+    dependencies:
+      - target: SmartSleepAlarm-WatchExtension
+
+  SmartSleepAlarm-WatchExtension:
+    type: com.apple.product-type.watchkit2-extension
+    platform: watchOS
+    sources:
+      - path: App/WatchExtension
+    info:
+      path: App/WatchExtension/Info.plist
+      properties:
+        NSHealthShareUsageDescription: 用于读取心率并判断清醒状态，确保闹铃不漏叫。
+        NSHealthUpdateUsageDescription: 用于写入最少量睡眠相关标记，优化智能闹铃判断。
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lzc.SmartSleepAlarm.watchextension
+        CODE_SIGN_ENTITLEMENTS: App/WatchExtension/SmartSleepAlarm_watch.entitlements
+    dependencies:
+      - package: SmartSleepCore
+        product: SmartSleepWatch
+      - sdk: WatchConnectivity.framework
+      - sdk: HealthKit.framework

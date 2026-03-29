@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		28CB0C4332B3315C278DDEE4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D61845FA4BEF5678AC8BE /* HealthKit.framework */; };
+		590BBA6AF1C62B26AC54E443 /* SmartSleepAlarmiOSHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BA77366AA9985570547698 /* SmartSleepAlarmiOSHostApp.swift */; };
+		5CDC6CE07CFD397C5012DD24 /* SmartSleepAlarm-WatchExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BDBC02289367DDDC360C322D /* SmartSleepAlarm-WatchExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6046871FB2223A9C7B450319 /* SmartSleepWatch in Frameworks */ = {isa = PBXBuildFile; productRef = 76C7314A0519BA3EF664B534 /* SmartSleepWatch */; };
+		7C5949D0D535CD82E1E8E8F6 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D4EB551E9821147E939A8C /* WatchConnectivity.framework */; };
+		9623628F8B96C50DC130382B /* SmartSleepAlarmWatchExtensionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CA99B331F4D09730C3EAD /* SmartSleepAlarmWatchExtensionApp.swift */; };
+		9E8D66F4C9FB2DC7EC3609AB /* SwiftDataAlarmRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9273581D4E1E14F8813CF4AB /* SwiftDataAlarmRepositoryAdapter.swift */; };
+		A6312A69C085F105597EBF9D /* SmartSleepiOS in Frameworks */ = {isa = PBXBuildFile; productRef = C12EBDDB73AE29D473AB5256 /* SmartSleepiOS */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D073A2B0CE9F9D0009141CB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52B609815B36E7BBC5CB758E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BACBD6F30ED32880131F347;
+			remoteInfo = "SmartSleepAlarm-WatchExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		26BA010E001026E39ADE7934 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5CDC6CE07CFD397C5012DD24 /* SmartSleepAlarm-WatchExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3F700EAD12365D789CE319FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4B5CA99B331F4D09730C3EAD /* SmartSleepAlarmWatchExtensionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartSleepAlarmWatchExtensionApp.swift; sourceTree = "<group>"; };
+		4C7B5F03B57ACC1863398C17 /* SmartSleepAlarm-WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SmartSleepAlarm-WatchApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		54BA77366AA9985570547698 /* SmartSleepAlarmiOSHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartSleepAlarmiOSHostApp.swift; sourceTree = "<group>"; };
+		580D61845FA4BEF5678AC8BE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		893806A54E38C29C360AFCC2 /* SmartSleepAlarm_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartSleepAlarm_iOS.entitlements; sourceTree = "<group>"; };
+		9273581D4E1E14F8813CF4AB /* SwiftDataAlarmRepositoryAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataAlarmRepositoryAdapter.swift; sourceTree = "<group>"; };
+		986F25E05BF7D6B5574237B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A4D4EB551E9821147E939A8C /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		BDBC02289367DDDC360C322D /* SmartSleepAlarm-WatchExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SmartSleepAlarm-WatchExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2AC9FF959AB56CA87C74005 /* SmartSleepAlarm-codex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "SmartSleepAlarm-codex"; path = .; sourceTree = SOURCE_ROOT; };
+		DC1009445740E6F4522D9EFB /* SmartSleepAlarm-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "SmartSleepAlarm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8C8321351658B8676E8C2C4 /* SmartSleepAlarm_watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartSleepAlarm_watch.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		189772A68DFDFE09F224505E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6046871FB2223A9C7B450319 /* SmartSleepWatch in Frameworks */,
+				7C5949D0D535CD82E1E8E8F6 /* WatchConnectivity.framework in Frameworks */,
+				28CB0C4332B3315C278DDEE4 /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26CE1C537E2E2A10B738A704 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6312A69C085F105597EBF9D /* SmartSleepiOS in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4DB26C193AAEE3732AA1ECDA /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				C2AC9FF959AB56CA87C74005 /* SmartSleepAlarm-codex */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		5C3C71FED25ED61EC8AD1152 = {
+			isa = PBXGroup;
+			children = (
+				6A595A84F8676377D3AF149B /* App */,
+				4DB26C193AAEE3732AA1ECDA /* Packages */,
+				B036C6F13055E66D113B7AE2 /* Frameworks */,
+				816393C3BF087F1963C21C4C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6A595A84F8676377D3AF149B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EEACAB51B94098A120E12B5A /* iOS */,
+				BFE3E628E179723C0F84F74E /* WatchExtension */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		816393C3BF087F1963C21C4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC1009445740E6F4522D9EFB /* SmartSleepAlarm-iOS.app */,
+				4C7B5F03B57ACC1863398C17 /* SmartSleepAlarm-WatchApp.app */,
+				BDBC02289367DDDC360C322D /* SmartSleepAlarm-WatchExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B036C6F13055E66D113B7AE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				580D61845FA4BEF5678AC8BE /* HealthKit.framework */,
+				A4D4EB551E9821147E939A8C /* WatchConnectivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BFE3E628E179723C0F84F74E /* WatchExtension */ = {
+			isa = PBXGroup;
+			children = (
+				3F700EAD12365D789CE319FA /* Info.plist */,
+				E8C8321351658B8676E8C2C4 /* SmartSleepAlarm_watch.entitlements */,
+				4B5CA99B331F4D09730C3EAD /* SmartSleepAlarmWatchExtensionApp.swift */,
+			);
+			path = WatchExtension;
+			sourceTree = "<group>";
+		};
+		EEACAB51B94098A120E12B5A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				986F25E05BF7D6B5574237B5 /* Info.plist */,
+				893806A54E38C29C360AFCC2 /* SmartSleepAlarm_iOS.entitlements */,
+				54BA77366AA9985570547698 /* SmartSleepAlarmiOSHostApp.swift */,
+				9273581D4E1E14F8813CF4AB /* SwiftDataAlarmRepositoryAdapter.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		26DABE9F422A21A03D24E0D6 /* SmartSleepAlarm-WatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6F8B80B7A225E482C6EE112 /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-WatchApp" */;
+			buildPhases = (
+				26BA010E001026E39ADE7934 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36C033BBDD668B32955A82CC /* PBXTargetDependency */,
+			);
+			name = "SmartSleepAlarm-WatchApp";
+			packageProductDependencies = (
+			);
+			productName = "SmartSleepAlarm-WatchApp";
+			productReference = 4C7B5F03B57ACC1863398C17 /* SmartSleepAlarm-WatchApp.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		2D72E980E1FA208B04BB7A4B /* SmartSleepAlarm-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D8C995BFC1F7D651411B999 /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-iOS" */;
+			buildPhases = (
+				306807C02348474C45D7DC55 /* Sources */,
+				26CE1C537E2E2A10B738A704 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SmartSleepAlarm-iOS";
+			packageProductDependencies = (
+				C12EBDDB73AE29D473AB5256 /* SmartSleepiOS */,
+			);
+			productName = "SmartSleepAlarm-iOS";
+			productReference = DC1009445740E6F4522D9EFB /* SmartSleepAlarm-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5BACBD6F30ED32880131F347 /* SmartSleepAlarm-WatchExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69F51079DC0C330D4439BC2C /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-WatchExtension" */;
+			buildPhases = (
+				8146209F1DDCE009F3C2A3EB /* Sources */,
+				189772A68DFDFE09F224505E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SmartSleepAlarm-WatchExtension";
+			packageProductDependencies = (
+				76C7314A0519BA3EF664B534 /* SmartSleepWatch */,
+			);
+			productName = "SmartSleepAlarm-WatchExtension";
+			productReference = BDBC02289367DDDC360C322D /* SmartSleepAlarm-WatchExtension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52B609815B36E7BBC5CB758E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					26DABE9F422A21A03D24E0D6 = {
+						DevelopmentTeam = "";
+					};
+					2D72E980E1FA208B04BB7A4B = {
+						DevelopmentTeam = "";
+					};
+					5BACBD6F30ED32880131F347 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 252154DE68D377F1E177B3AC /* Build configuration list for PBXProject "SmartSleepAlarm" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5C3C71FED25ED61EC8AD1152;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F600700566F36BBBEE138EAF /* XCLocalSwiftPackageReference "." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 816393C3BF087F1963C21C4C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				26DABE9F422A21A03D24E0D6 /* SmartSleepAlarm-WatchApp */,
+				5BACBD6F30ED32880131F347 /* SmartSleepAlarm-WatchExtension */,
+				2D72E980E1FA208B04BB7A4B /* SmartSleepAlarm-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		306807C02348474C45D7DC55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				590BBA6AF1C62B26AC54E443 /* SmartSleepAlarmiOSHostApp.swift in Sources */,
+				9E8D66F4C9FB2DC7EC3609AB /* SwiftDataAlarmRepositoryAdapter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8146209F1DDCE009F3C2A3EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9623628F8B96C50DC130382B /* SmartSleepAlarmWatchExtensionApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36C033BBDD668B32955A82CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5BACBD6F30ED32880131F347 /* SmartSleepAlarm-WatchExtension */;
+			targetProxy = D073A2B0CE9F9D0009141CB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0100FDA2669DB7A8C2438F52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/iOS/SmartSleepAlarm_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.ios;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		53AA30AE05AA31AD21A621B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/iOS/SmartSleepAlarm_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.ios;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5D9F9AD28CE112A6672042A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = App/WatchApp/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.watchapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		901C529539908B9DAE76F492 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A5F48D3C8CF983EBF84E856C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		B3E584B98928E7344BA0E92E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = App/WatchExtension/SmartSleepAlarm_watch.entitlements;
+				INFOPLIST_FILE = App/WatchExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.watchextension;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		BF97EB5E8ECE3A1733DC3D4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = App/WatchApp/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.watchapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		CAF06725EADB78B505F91445 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = App/WatchExtension/SmartSleepAlarm_watch.entitlements;
+				INFOPLIST_FILE = App/WatchExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lzc.SmartSleepAlarm.watchextension;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		252154DE68D377F1E177B3AC /* Build configuration list for PBXProject "SmartSleepAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				901C529539908B9DAE76F492 /* Debug */,
+				A5F48D3C8CF983EBF84E856C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		69F51079DC0C330D4439BC2C /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-WatchExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3E584B98928E7344BA0E92E /* Debug */,
+				CAF06725EADB78B505F91445 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8D8C995BFC1F7D651411B999 /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53AA30AE05AA31AD21A621B4 /* Debug */,
+				0100FDA2669DB7A8C2438F52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F6F8B80B7A225E482C6EE112 /* Build configuration list for PBXNativeTarget "SmartSleepAlarm-WatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D9F9AD28CE112A6672042A4 /* Debug */,
+				BF97EB5E8ECE3A1733DC3D4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F600700566F36BBBEE138EAF /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		76C7314A0519BA3EF664B534 /* SmartSleepWatch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SmartSleepWatch;
+		};
+		C12EBDDB73AE29D473AB5256 /* SmartSleepiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SmartSleepiOS;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 52B609815B36E7BBC5CB758E /* Project object */;
+}
