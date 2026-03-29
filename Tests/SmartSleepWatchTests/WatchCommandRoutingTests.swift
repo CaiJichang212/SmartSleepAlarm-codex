@@ -11,7 +11,9 @@ private final class MockGestureDetector: GestureSnoozeDetector {
 }
 
 private actor MockSignalProvider: SleepSignalProvider {
-    func latestSignal() async -> SleepSignal? { nil }
+    func latestReadout() async -> SleepSignalReadout {
+        .init(signal: nil, degradeReason: .sensorTimeout)
+    }
 }
 
 private struct MockAnalyzer: SleepSignalAnalyzer {

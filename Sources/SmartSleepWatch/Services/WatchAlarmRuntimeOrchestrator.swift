@@ -88,10 +88,18 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
 
     public func pollSleepSignal() {
         Task {
-            guard let signal = await signalProvider.latestSignal() else {
+            let readout = await signalProvider.latestReadout()
+            if let reason = readout.degradeReason {
+                let transition = engine.handle(.init(kind: .degrade(reason: reason)))
+                apply(transition)
+                await sendDegrade(reason: reason, detail: readout.detail ?? "sensor_degraded")
+                return
+            }
+
+            guard let signal = readout.signal else {
                 let transition = engine.handle(.init(kind: .degrade(reason: .sensorTimeout)))
                 apply(transition)
-                await sendDegrade(reason: .sensorTimeout, detail: "未读取到传感器数据")
+                await sendDegrade(reason: .sensorTimeout, detail: "signal_nil_without_reason")
                 return
             }
 

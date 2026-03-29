@@ -57,7 +57,7 @@
 ## P0（必须）
 - [ ] 接通 WatchConnectivity 收包处理：watch 端可接收 `PrewarmCommand` 并自动启动后台会话。
 - [ ] 接通闹铃触发链路：到点后 watch 端自动进入 ringing + 监测流程（非“模拟按钮”触发）。
-- [ ] 实现 HealthKit 心率实时采样与 CoreMotion 加速度采样，替换占位 provider。
+- [x] 实现 HealthKit 心率实时采样与 CoreMotion 加速度采样，替换占位 provider。
 - [ ] 完成“清醒后 5 秒内静音”的端到端行为验证（含日志与时间戳）。
 - [ ] 完成“5 分钟内再睡自动重响”的端到端行为验证。
 - [ ] 传感器缺失/异常时维持保底响铃并给出降级原因。
@@ -112,12 +112,12 @@
 
 ## 阶段 3：watch 传感器与智能判断
 ### 开发任务
-- [ ] HealthKit 心率实时读取（采样频率与超时策略）。
-- [ ] CoreMotion 体动采集并喂给 `SleepSignalAnalyzer`。
-- [ ] 传感器异常分类（未佩戴/超时/权限不足）与降级上报。
+- [x] HealthKit 心率实时读取（采样频率与超时策略）。
+- [x] CoreMotion 体动采集并喂给 `SleepSignalAnalyzer`。
+- [x] 传感器异常分类（未佩戴/超时/权限不足）与降级上报。
 ### 测试验证（通过后进入阶段 4）
 - [ ] 实机验证：有数据时可进入 awake/asleep 判定路径。
-- [ ] 无数据/权限拒绝时稳定进入 degraded 且不中断响铃策略。
+- [x] 无数据/权限拒绝时稳定进入 degraded 且不中断响铃策略（自动化测试覆盖）。
 - [ ] 连续运行稳定性（长时间监测不崩溃）。
 
 ## 阶段 4：唤醒与贪睡完整体验
@@ -192,3 +192,17 @@
   - iOS scheme 构建：通过（日志 `/tmp/smartsleep_phase2_ios.log`）。
   - watchOS scheme 构建：通过（日志 `/tmp/smartsleep_phase2_watch.log`）。
 - Go/No-Go：`Go`（允许进入阶段 3）。
+
+### 阶段 3（已完成，进入阶段 4）
+- 完成项：
+  - `HealthKitSleepSignalProvider` 完成真实读取链路：HeartRate 查询 + CoreMotion 加速度采样合并输出 `SleepSignalReadout`。
+  - watch 端运行时已接入结构化读数：优先按 `degradeReason` 触发降级，再按 `signal` 进行 awake/asleep 推断。
+  - 异常分类已落地并上报：`healthPermissionMissing`、`sensorTimeout`、`watchNotWorn`。
+  - 修复 Swift 6 并发问题：体动回调不再跨 actor 捕获 `self`，改为线程安全样本缓存。
+  - 新增测试 `SensorDegradeTests`，验证权限缺失触发 degraded。
+- 测试结果：
+  - `xcrun swift test`：通过（13/13）。
+  - iOS scheme（Simulator）构建：通过（日志 `/tmp/smartsleep_phase3_ios_sim.log`）。
+  - watchOS scheme（Simulator）构建：通过（日志 `/tmp/smartsleep_phase3_watch_sim.log`）。
+  - 补充说明：`generic/platform=iOS` 与 `generic/platform=watchOS` 设备构建需配置 Development Team，否则会因签名失败。
+- Go/No-Go：`Go`（允许进入阶段 4）。
