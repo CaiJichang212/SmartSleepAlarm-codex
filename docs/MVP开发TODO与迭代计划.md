@@ -62,7 +62,7 @@
 - [ ] 完成“5 分钟内再睡自动重响”的端到端行为验证。
 - [ ] 传感器缺失/异常时维持保底响铃并给出降级原因。
 - [ ] iOS 首次权限引导完整化（通知 + HealthKit）与失败态提示。
-- [ ] watch 端手势贪睡后给出反馈（震动或 UI 提示）。
+- [x] watch 端手势贪睡后给出反馈（震动或 UI 提示）。
 
 ## P1（MVP 强化）
 - [ ] 系统铃声选择器接入（替代 `soundID` 手输）。
@@ -122,13 +122,13 @@
 
 ## 阶段 4：唤醒与贪睡完整体验
 ### 开发任务
-- [ ] 打通真实响铃触发后的全流程状态机。
-- [ ] 接入翻腕手势阈值调参与防误触策略。
-- [ ] 贪睡触发反馈（触觉 + UI 状态）完善。
+- [x] 打通真实响铃触发后的全流程状态机。
+- [x] 接入翻腕手势阈值调参与防误触策略。
+- [x] 贪睡触发反馈（触觉 + UI 状态）完善。
 ### 测试验证（通过后进入阶段 5）
-- [ ] 验证“清醒信号持续 3 秒后静音”。
-- [ ] 验证“静音后 5 分钟内再睡 -> 自动重响”。
-- [ ] 验证“手势贪睡 X 分钟后重响，并继续智能监测”。
+- [x] 验证“清醒信号持续 3 秒后静音”（状态机单测）。
+- [x] 验证“静音后 5 分钟内再睡 -> 自动重响”（状态机单测）。
+- [x] 验证“手势贪睡 X 分钟后重响，并继续智能监测”（状态机 + watch 流程测试）。
 
 ## 阶段 5：验收封板
 ### 开发任务
@@ -206,3 +206,36 @@
   - watchOS scheme（Simulator）构建：通过（日志 `/tmp/smartsleep_phase3_watch_sim.log`）。
   - 补充说明：`generic/platform=iOS` 与 `generic/platform=watchOS` 设备构建需配置 Development Team，否则会因签名失败。
 - Go/No-Go：`Go`（允许进入阶段 4）。
+
+### 阶段 4（已完成，进入阶段 5）
+- 完成项：
+  - iOS 端新增运行时派发循环：按时间窗口自动下发 `PrewarmCommand` 与 `RingEvent`，打通非“模拟按钮”的真实响铃触发链路。
+  - iOS 端修正触发窗口边界：到点后 30 秒内仍按本次闹铃派发 ring，避免跳到下一次周期。
+  - 翻腕手势识别升级：加入旋转阈值 + 重力变化阈值 + 连续命中计数 + 冷却时间，降低误触发。
+  - watch 端新增反馈播放器：对 `ringing/reringing/silenced/degraded/dismissed` 状态切换提供触觉反馈。
+  - 手势贪睡后状态文案优化：显示“已贪睡 X 分钟，随后重响”。
+- 测试结果：
+  - `xcrun swift test`：通过（16/16）。
+  - iOS scheme（Simulator）构建：通过（日志 `/tmp/smartsleep_phase4_ios_sim.log`）。
+  - watchOS scheme（Simulator）构建：通过（日志 `/tmp/smartsleep_phase4_watch_sim.log`）。
+  - 补充说明：本阶段“真实响铃全流程”已完成代码与自动化验证，真机长时稳定性与验收证据在阶段 5 继续补齐。
+- Go/No-Go：`Go`（允许进入阶段 5）。
+
+### 阶段 5（进行中：自动化完成，待真机封板）
+- 完成项：
+  - 按 9 条验收项补齐自动化证据映射，并形成阶段文档：`docs/阶段5验收与封板清单.md`。
+  - 新增阶段验证脚本：`scripts/phase5_validate.sh`，统一产出测试与构建日志到 `artifacts/phase5/`。
+  - 补齐阶段 5 相关自动化测试覆盖：
+    - iOS 闹铃 CRUD、智能开关与贪睡配置持久化；
+    - -30 分钟预热下发、到点响铃下发；
+    - 清醒后 5 秒内退出响铃态；
+    - 手势贪睡触发反馈与贪睡后重响状态机。
+- 测试结果：
+  - `scripts/phase5_validate.sh`：通过。
+  - `swift test`：通过（21/21，日志 `artifacts/phase5/swift_test.log`）。
+  - iOS scheme（Simulator）构建：通过（日志 `artifacts/phase5/ios_sim_build.log`）。
+  - watchOS scheme（Simulator）构建：通过（日志 `artifacts/phase5/watch_sim_build.log`）。
+- 阻塞项（发布前必须补齐）：
+  - 仍缺真机联调证据（iPhone + Apple Watch）与 9 条验收录屏/时间戳日志。
+  - 仍缺功耗、长时稳定性、断连/低电量异常链路的真机复核报告。
+- Go/No-Go：`No-Go`（自动化通过，但未完成真机封板验收）。
