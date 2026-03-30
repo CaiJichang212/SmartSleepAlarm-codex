@@ -16,6 +16,7 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
     private let watchSession: WatchSessionCoordinator
     private let logger: AlarmEventLogger
     private let runtimeSessionController: any RuntimeSessionControlling
+    private let feedbackPlayer: any WatchAlarmFeedbackPlayer
     private let snoozePolicy = SnoozePolicy()
 
     private var awakeConfirmTask: Task<Void, Never>?
@@ -31,7 +32,8 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
         gestureDetector: any GestureSnoozeDetector = CoreMotionFlipDetector(),
         watchSession: WatchSessionCoordinator = LiveWatchSessionCoordinator(),
         logger: AlarmEventLogger = JSONLineAlarmEventLogger(),
-        runtimeSessionController: any RuntimeSessionControlling = ExtendedRuntimeSessionController()
+        runtimeSessionController: any RuntimeSessionControlling = ExtendedRuntimeSessionController(),
+        feedbackPlayer: any WatchAlarmFeedbackPlayer = LiveWatchAlarmFeedbackPlayer()
     ) {
         self.analyzer = analyzer
         self.signalProvider = signalProvider
@@ -39,6 +41,7 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
         self.watchSession = watchSession
         self.logger = logger
         self.runtimeSessionController = runtimeSessionController
+        self.feedbackPlayer = feedbackPlayer
 
         self.gestureDetector.onFlipDetected = { [weak self] in
             Task { @MainActor in
@@ -81,6 +84,7 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
     }
 
     public func startRinging() {
+        runtimeSessionController.start()
         let transition = engine.handle(.init(kind: .ringStarted))
         apply(transition)
         pollSleepSignal()
@@ -132,6 +136,7 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
         guard runtimeState == .ringing || runtimeState == .reringing else { return }
         let transition = engine.handle(.init(kind: .snoozeTriggered(minutes: currentSnoozeMinutes)))
         apply(transition)
+        statusNote = "已贪睡 \(currentSnoozeMinutes) 分钟，随后重响"
         sendSnoozeEvent()
         startSnoozeCountdown(minutes: currentSnoozeMinutes)
     }
@@ -184,6 +189,7 @@ public final class WatchAlarmRuntimeOrchestrator: ObservableObject {
     private func apply(_ transition: SmartAlarmTransition) {
         runtimeState = transition.to
         statusNote = transition.note
+        feedbackPlayer.playTransition(from: transition.from, to: transition.to)
         Task {
             await logger.log(
                 .init(

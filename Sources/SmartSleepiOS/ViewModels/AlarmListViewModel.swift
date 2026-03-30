@@ -23,6 +23,9 @@ public final class AlarmListViewModel: ObservableObject {
     private let logger: AlarmEventLogger
     private let calculator = AlarmOccurrenceCalculator()
     private let runtimeConfig = SmartRuntimeConfig()
+    private var runtimeDispatchTask: Task<Void, Never>?
+    private var lastPrewarmTriggerEpoch: [UUID: TimeInterval] = [:]
+    private var lastRingTriggerEpoch: [UUID: TimeInterval] = [:]
 
     public init(
         repository: AlarmRepository,
@@ -41,6 +44,7 @@ public final class AlarmListViewModel: ObservableObject {
     }
 
     public func onAppear() {
+        runtimeDispatchTask?.cancel()
         Task {
             await watchSession.setEventHandler { [weak self] event in
                 Task { @MainActor in
@@ -53,6 +57,8 @@ public final class AlarmListViewModel: ObservableObject {
             defaultSnoozeMinutes = settingsRepository.getDefaultSnoozeMinutes()
             reloadAlarms()
             await syncPlanToWatch()
+            await processRuntimeDispatch(now: Date())
+            startRuntimeDispatchLoop()
         }
     }
 
@@ -114,6 +120,7 @@ public final class AlarmListViewModel: ObservableObject {
     public func reloadAlarms() {
         do {
             alarms = try repository.fetchAlarms()
+            pruneDispatchHistory()
             Task {
                 await logger.log(
                     .init(
@@ -148,6 +155,7 @@ public final class AlarmListViewModel: ObservableObject {
             Task {
                 await scheduleIfNeeded(alarm)
                 await syncPlanToWatch()
+                await processRuntimeDispatch(now: Date())
             }
         } catch {
             lastError = "保存闹铃失败: \(error.localizedDescription)"
@@ -172,6 +180,10 @@ public final class AlarmListViewModel: ObservableObject {
         }
     }
 
+    deinit {
+        runtimeDispatchTask?.cancel()
+    }
+
     private func refreshPermissions() async {
         permissionStatus = await permissionService.currentStatus()
     }
@@ -190,24 +202,61 @@ public final class AlarmListViewModel: ObservableObject {
                     detail: "trigger=\(triggerDate.ISO8601Format())"
                 )
             )
-
-            let prewarm = PrewarmCommand(
-                alarmID: alarm.id,
-                triggerDate: triggerDate,
-                prewarmDate: calculator.prewarmDate(for: triggerDate, config: runtimeConfig)
-            )
-            try await watchSession.send(.prewarm(prewarm))
-            await logger.log(
-                .init(
-                    alarmID: alarm.id,
-                    state: .prewarming,
-                    source: "iOS",
-                    event: "prewarm_sent",
-                    detail: "prewarm=\(prewarm.prewarmDate.ISO8601Format())"
-                )
-            )
         } catch {
             lastError = "调度失败: \(error.localizedDescription)"
+        }
+    }
+
+    func processRuntimeDispatch(now: Date = Date()) async {
+        let dispatchReferenceTime = now.addingTimeInterval(-30)
+        for alarm in alarms where alarm.enabled && alarm.smartModeEnabled {
+            guard let triggerDate = calculator.nextTriggerDate(for: alarm, from: dispatchReferenceTime) else { continue }
+            let triggerEpoch = triggerDate.timeIntervalSince1970
+            let prewarmDate = calculator.prewarmDate(for: triggerDate, config: runtimeConfig)
+
+            if now >= prewarmDate && now < triggerDate,
+               shouldDispatchPrewarm(alarmID: alarm.id, triggerEpoch: triggerEpoch) {
+                do {
+                    let prewarm = PrewarmCommand(
+                        alarmID: alarm.id,
+                        triggerDate: triggerDate,
+                        prewarmDate: prewarmDate
+                    )
+                    try await watchSession.send(.prewarm(prewarm))
+                    lastPrewarmTriggerEpoch[alarm.id] = triggerEpoch
+                    await logger.log(
+                        .init(
+                            alarmID: alarm.id,
+                            state: .prewarming,
+                            source: "iOS",
+                            event: "prewarm_sent",
+                            detail: "trigger=\(triggerDate.ISO8601Format())"
+                        )
+                    )
+                } catch {
+                    lastError = "预热下发失败: \(error.localizedDescription)"
+                }
+            }
+
+            if now >= triggerDate,
+               now.timeIntervalSince(triggerDate) <= 30,
+               shouldDispatchRing(alarmID: alarm.id, triggerEpoch: triggerEpoch) {
+                do {
+                    try await watchSession.send(.ring(.init(alarmID: alarm.id, state: .ringing, at: now)))
+                    lastRingTriggerEpoch[alarm.id] = triggerEpoch
+                    await logger.log(
+                        .init(
+                            alarmID: alarm.id,
+                            state: .ringing,
+                            source: "iOS",
+                            event: "ring_sent",
+                            detail: "trigger=\(triggerDate.ISO8601Format())"
+                        )
+                    )
+                } catch {
+                    lastError = "响铃下发失败: \(error.localizedDescription)"
+                }
+            }
         }
     }
 
@@ -274,5 +323,30 @@ public final class AlarmListViewModel: ObservableObject {
                 event: "plan_retry_failed"
             )
         )
+    }
+
+    private func startRuntimeDispatchLoop() {
+        runtimeDispatchTask?.cancel()
+        runtimeDispatchTask = Task { [weak self] in
+            while !Task.isCancelled {
+                guard let self else { return }
+                await self.processRuntimeDispatch(now: Date())
+                try? await Task.sleep(for: .seconds(1))
+            }
+        }
+    }
+
+    private func shouldDispatchPrewarm(alarmID: UUID, triggerEpoch: TimeInterval) -> Bool {
+        lastPrewarmTriggerEpoch[alarmID] != triggerEpoch
+    }
+
+    private func shouldDispatchRing(alarmID: UUID, triggerEpoch: TimeInterval) -> Bool {
+        lastRingTriggerEpoch[alarmID] != triggerEpoch
+    }
+
+    private func pruneDispatchHistory() {
+        let existing = Set(alarms.map(\.id))
+        lastPrewarmTriggerEpoch = lastPrewarmTriggerEpoch.filter { existing.contains($0.key) }
+        lastRingTriggerEpoch = lastRingTriggerEpoch.filter { existing.contains($0.key) }
     }
 }

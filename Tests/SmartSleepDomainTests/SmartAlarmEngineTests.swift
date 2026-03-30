@@ -33,4 +33,15 @@ final class SmartAlarmEngineTests: XCTestCase {
         XCTAssertEqual(engine.state, .degraded)
         XCTAssertTrue(transition.shouldRing)
     }
+
+    func testSnoozeTimeoutReturnsToReringing() {
+        var engine = SmartAlarmEngine()
+
+        _ = engine.handle(.init(kind: .ringStarted))
+        _ = engine.handle(.init(kind: .snoozeTriggered(minutes: 5)))
+        let transition = engine.handle(.init(kind: .snoozeTimeout))
+
+        XCTAssertEqual(engine.state, .reringing)
+        XCTAssertTrue(transition.shouldRing)
+    }
 }
